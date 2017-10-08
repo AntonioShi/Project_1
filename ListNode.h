@@ -6,6 +6,7 @@
 #define PROJECT_1_LISTNODE_H
 
 #include <malloc.h>
+#include <stdio.h>
 
 typedef int DataType ;//指数
 typedef double Real ;//系数
@@ -55,19 +56,42 @@ SLNode* ListInsert(SLNode *head, int i, DataType n, Real d){
     return head ;
 }
 
+///*在链表末尾插入结点*/
+//void InsertToLast(SLNode *head,SLNode *x)
+//{
+//    SLNode *p,*s;
+//
+//    p= head->next;
+//    while(p->next !=head)
+//    {
+//        p=p->next;
+//    }
+//
+//    if(p->next == head)
+//    {
+//
+//        s= (SLNode *)malloc(sizeof(SLNode));  //生成新节点
+//        s->data =x->data;
+//
+//        s->next = p->next;
+//        p->next = s;
+//    }
+//
+//
+//}
+
 //从现有的链表中查找看看是否有相同的指数节点
 SLNode *FindSameNode(SLNode *head, DataType n){//传入要查找的指数
     SLNode *p = head ;
 
-    while (p->next != NULL && p->data != n) {
-        p ++ ;
+    while (p->next != NULL) {
+        if(p->data != n){
+           ;
+        } else{
+            return p ;
+        }
+        p = p->next ;
     }
-    if(p->data != n){
-        printf("没有找到与之相同的指数\n") ;
-        return NULL ;
-    }
-
-    return p ;
 }
 
 //大致分两类情况,系数d?0,d = 0, d#0.
@@ -77,12 +101,14 @@ int Input(SLNode *head){
     double d = 1 ;//系数
     SLNode *p = head;
     SLNode *q = NULL;
-    char a = ' ', b = ' ' ;
+    char a ;
 
-    scanf("%d %lf", &n, &d) ;
-   // while () {
+    for (int i = 0; (a = getchar()) != '\n'; i++) {
+        ungetc(a, stdin) ;
+        scanf("%lf %d", &d, &n) ;
+
         if(d == 0){
-            //continue ;
+            continue ;
         }
         else if(d != 0){
             /*判断有无相同指数的项*/
@@ -93,13 +119,15 @@ int Input(SLNode *head){
                 q->real += d ;
             } else{
                 //没有找到相同指数的节点
-                p = ListInsert(head, ListLength(head) + 1, n, d);//尾插入
+                int ch = ListLength(head) ;
+                printf("%4d\n", ch) ;
+                p = ListInsert(head, ListLength(head), n, d);//尾插入
 
             }
         }
 
-       // scanf("%d %lf", &n, &d) ;
-    //}
+    }
+
 }
 
 int ListDelete(SLNode *head, int i, DataType *s, Real *d){
