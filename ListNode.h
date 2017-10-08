@@ -33,8 +33,10 @@ int ListLength(SLNode *head){
 }
 
 //此处应有一个函数
+
 //Insert one data and copy s to the new node
-SLNode* ListInsert(SLNode *head, int i, DataType s, Real d){
+SLNode* ListInsert(SLNode *head, int i, DataType n, Real d){
+    //在i位置处插入一个节点,系数d,指数n
     SLNode *p, *q ;
     int j = -1 ;
     p = head ;
@@ -47,31 +49,57 @@ SLNode* ListInsert(SLNode *head, int i, DataType s, Real d){
     q = (SLNode *)malloc(sizeof(SLNode)) ;
     q->next = p->next ;
     p->next = q ;
-    q->data = s ;//傳入數據,鏈接節點
+    q->data = n ;//傳入數據,鏈接節點
     q->real = d ;
 
     return head ;
 }
 
-int Input(SLNode *head, DataType s, Real d){
-    int i;
-    double j ;
-    SLNode *p = head, *q;
+//从现有的链表中查找看看是否有相同的指数节点
+SLNode *FindSameNode(SLNode *head, DataType n){//传入要查找的指数
+    SLNode *p = head ;
+
+    while (p->next != NULL && p->data != n) {
+        p ++ ;
+    }
+    if(p->data != n){
+        printf("没有找到与之相同的指数\n") ;
+        return NULL ;
+    }
+
+    return p ;
+}
+
+//大致分两类情况,系数d?0,d = 0, d#0.
+//d =0,则无需操作 d#0,再分指数有无相同的情况.
+int Input(SLNode *head){
+    int n = 0;//指数
+    double d = 1 ;//系数
+    SLNode *p = head;
+    SLNode *q = NULL;
     char a = ' ', b = ' ' ;
-    scanf("%d %lf%c%c", &i, &j, &a, &b) ;
-    while ( (a != '#') && (b != '#') ) {
-        if(j == 0){
-            continue ;
-        } else if(/*判断有无相同指数的项*/1){
-          q->real += j ;//no space
-        } else{
-            //space
-            q = (SLNode *)malloc(sizeof(SLNode)) ;
-            //Inser(q) ;//分三种情况插入,不过插入前要比较.
+
+    scanf("%d %lf", &n, &d) ;
+   // while () {
+        if(d == 0){
+            //continue ;
+        }
+        else if(d != 0){
+            /*判断有无相同指数的项*/
+            //添加一个检索函数
+            /**/
+            q = FindSameNode(head, n) ;
+            if(q != NULL){
+                q->real += d ;
+            } else{
+                //没有找到相同指数的节点
+                p = ListInsert(head, ListLength(head) + 1, n, d);//尾插入
+
+            }
         }
 
-        scanf("%d %lf%c%c", &i, &j, &a, &b) ;
-    }
+       // scanf("%d %lf", &n, &d) ;
+    //}
 }
 
 int ListDelete(SLNode *head, int i, DataType *s, Real *d){
@@ -135,9 +163,9 @@ void Destroy(SLNode **head){
     return ;
 }
 
-void ListSort(SLNode **head){
-    //传入头指针,指数从小到大排序
-
-}
+//void ListSort(SLNode **head){
+//    //传入头指针,指数从小到大排序
+//
+//}
 
 #endif //PROJECT_1_LISTNODE_H
