@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "ListNode.h"
 
-int main() {
+int main(void) {
     SLNode *pHead1, *pHead2 ;
     int n = 0 ;
 
