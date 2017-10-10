@@ -2,48 +2,42 @@
 #include "ListNode.h"
 
 int main(void) {
-    SLNode *pHead1, *pHead2 ;
+    SLNode *pHead1, *pHead2, *q ;
     int n = 0 ;
-
     double p = 0.0 ;
 
-    ListInitiate(&pHead1) ;
+    ListInitiate(&pHead1) ;//初始化头节点
     ListInitiate(&pHead2) ;
 
-    for (int i = 0, j = 10; i < 10; i++, j --) {
+    for (int i = 0, j = 10; i < 10; i++, j --) {//初始化链表数据
         pHead1 = ListInsert( pHead1, i, j, (double)j ) ;//Head 接收头节点的地址
         pHead2 = ListInsert( pHead2, i, j, (double)j ) ;
     }
 
     printf("输如方式:系数 指数\n") ;
     printf("多项式一:\n") ;
-    //Input(pHead1) ;
+    Input(pHead1) ;//输入函数
 
     //排序:从小到大
-    pHead1 = ListSort(pHead1) ;
+    pHead1 = ListSort(pHead1) ;//排序函数
+    ListDislay(pHead1) ;//输出函数
 
-    for (int j = 1; j <= ListLength(pHead1) - 1; j++) {//1-10
-        ListGet(pHead1, j, &n, &p) ;
-        printf("%.2lf*X^%d + ", p, n) ;
-    }
-    ListGet(pHead1, ListLength(pHead1), &n, &p) ;
-    printf("%.2lf*X^%d", p, n) ;
+    printf("多项式二:\n") ;
+    //Input(pHead2) ;
 
-      printf("\n") ;
-//    printf("多项式二:\n") ;
-//    //Input(pHead2) ;
-//
-//    for (int j = 1; j <= ListLength(pHead2) - 1; j++) {//1-10
-//        ListGet(pHead2, j, &n, &p) ;
-//        printf("%.2lf*X^%d + ", p, n) ;
-//    }
-//    ListGet(pHead2, ListLength(pHead2), &n, &p) ;
-//    printf("%.2lf*X^%d\n", p, n) ;
+    //排序:从小到大
+    pHead2 = ListSort(pHead2) ;
+    ListDislay(pHead2) ;//输出函数
 
+    printf("两项相加:\n") ;
+    q = ListAdd(pHead1, pHead2) ;
 
-    Destroy(&pHead1) ;
-    //Destroy(&pHead2) ;
+    ListSort(q) ;
+    ListDislay(q) ;
 
-    printf("The World is over!\n");
+    Destroy(&pHead1) ;//释放内存
+    Destroy(&pHead2) ;
+
+    printf("\nThe World is over!\n");
     return 0;
 }

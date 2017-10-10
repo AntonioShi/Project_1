@@ -54,6 +54,7 @@ SLNode* ListInsert(SLNode *head, int i, DataType n, Real d){
     q->real = d ;
 
     return head ;
+
 }
 
 ///*在链表末尾插入结点*/
@@ -82,16 +83,18 @@ SLNode* ListInsert(SLNode *head, int i, DataType n, Real d){
 
 //从现有的链表中查找看看是否有相同的指数节点
 SLNode *FindSameNode(SLNode *head, DataType n){//传入要查找的指数
-    SLNode *p = head ;
+    SLNode *p = head->next ;
 
-    while (p->next != NULL) {
-        if(p->data != n){
-           ;
-        } else{
-            return p ;
+    while (p != NULL) {
+        if (p->data != n) {
+            ;
+        } else {
+            return p;
         }
-        p = p->next ;
+        p = p->next;
     }
+    return NULL ;
+
 }
 
 //大致分两类情况,系数d?0,d = 0, d#0.
@@ -119,8 +122,6 @@ int Input(SLNode *head){
                 q->real += d ;
             } else{
                 //没有找到相同指数的节点
-                int ch = ListLength(head) ;
-                printf("%4d\n", ch) ;
                 p = ListInsert(head, ListLength(head), n, d);//尾插入
 
             }
@@ -219,5 +220,33 @@ SLNode* ListSort(SLNode *head) {
     return head ;
 }
 
+void ListDislay(SLNode *head){
+    int n ;
+    double d ;
+    SLNode *p = head ;
+    for (int j = 1; j <= ListLength(p) - 1; j++) {//1-10
+        ListGet(p, j, &n, &d) ;
+        printf("%.2lf*X^%d + ", d, n) ;
+    }
+    ListGet(p, ListLength(p), &n, &d) ;
+    printf("%.2lf*X^%d\n", d, n) ;
+
+    printf("\n") ;
+
+}
+
+SLNode* ListAdd(SLNode *pHead1, SLNode *pHead2){
+    SLNode *p, *q, *tail ;
+
+    for(q = pHead2->next; q != NULL; q = q->next){
+        p = FindSameNode(pHead1, q->data) ;
+        if(p != NULL){
+            p->real += q->real ;
+        } else{
+            p = ListInsert(pHead1, ListLength(pHead1), q->data, q->real) ;
+        }
+    }
+    return p ;
+}
 
 #endif //PROJECT_1_LISTNODE_H
