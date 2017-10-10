@@ -191,9 +191,33 @@ void Destroy(SLNode **head){
     return ;
 }
 
-//void ListSort(SLNode **head){
-//    //传入头指针,指数从小到大排序
-//
-//}
+
+SLNode* ListSort(SLNode *head) {
+    //传入头指针,指数从小到大排序
+    SLNode *p, *q ;
+    int n ;
+    double d ;
+
+    p = head->next ;
+    while (p) {
+        q = p->next ;
+        while (q) {
+            if(p->data > q->data){
+                n = p->data ;
+                d = p->real ;
+                p->data = q->data ;
+                p->real = q->real ;
+                q->data = n ;
+                q->real = d ;
+
+            }
+            q = q->next ;
+        }
+        p = p->next ;
+    }
+
+    return head ;
+}
+
 
 #endif //PROJECT_1_LISTNODE_H
